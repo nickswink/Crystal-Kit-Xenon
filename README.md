@@ -1,3 +1,7 @@
+# Crystal Kit - Mythic Xenon
+
+Rasta Mouse's [Crystal Kit](https://github.com/rasta-mouse/Crystal-Kit) with a small tweak for compatibility with Mythic Xenon Agent.
+
 # Crystal Kit
 
 This repo is a technical and social experiment to explore whether replacing Cobalt Strike's evasion primitives (Sleepmask/BeaconGate) with a [Crystal Palace](https://tradecraftgarden.org/) PICO is feasible (or even desirable) for advanced evasion scenarios.
