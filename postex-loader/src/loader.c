@@ -10,6 +10,7 @@ DECLSPEC_IMPORT BOOL   WINAPI KERNEL32$VirtualFree    ( LPVOID, SIZE_T, DWORD );
 char _PICO_ [ 0 ] __attribute__ ( ( section ( "pico" ) ) );
 char _MASK_ [ 0 ] __attribute__ ( ( section ( "mask" ) ) );
 char _DLL_  [ 0 ] __attribute__ ( ( section ( "dll" ) ) );
+char _DLLARGS_ [ 0 ] __attribute__ ( ( section ( "dll_args" ) ) );
 
 int __tag_setup_hooks  ( );
 int __tag_setup_memory ( );
@@ -132,9 +133,12 @@ void go ( void * loader_arguments )
     /* now run the DLL */
     DLLMAIN_FUNC entry_point = EntryPoint ( &dll_data, dll_dst );
 
+    /* Pointer to DLL arguments */
+	char * dll_arguments = GETRESOURCE ( _DLLARGS_ );
+
     /* free the unmasked copy */
     KERNEL32$VirtualFree ( dll_src, 0, MEM_RELEASE );
 
-    entry_point ( ( HINSTANCE ) dll_dst, DLL_PROCESS_ATTACH, NULL );
-    entry_point ( ( HINSTANCE ) ( char * ) go, 0x4, loader_arguments );
+    entry_point ( ( HINSTANCE ) dll_dst, DLL_PROCESS_ATTACH, dll_arguments );
+    // entry_point ( ( HINSTANCE ) ( char * ) go, 0x4, NULL );
 }

@@ -6,12 +6,8 @@ x64:
     load "bin/services.x64.o"
         merge
 
-    dfr "patch_resolve" "strings"
+    dfr "patch_resolve" "ror13"
     mergelib "../libtcg.x64.zip"
-
-    # patch smart pointers in
-    patch "get_module_handle" $GMH
-    patch "get_proc_address"  $GPA
 
     # merge hooks into the loader
     load "bin/hooks.x64.o"
@@ -41,6 +37,11 @@ x64:
     push $MASK
         preplen
         link "mask"
+
+    # DLL Args from File
+    load %ARGFILE
+        preplen
+        link "dll_args"
 
     # now get the tradecraft as a PICO
     run "pico.spec"
