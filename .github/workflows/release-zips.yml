@@ -1,0 +1,33 @@
+# Build source ZIPs and attach them to GitHub releases.
+name: Release source
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  zip-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create crystalkit-loader.zip
+        run: |
+          cd loader
+          zip -r ../crystalkit-loader.zip .
+
+      - name: Create crystalkit-postex-loader.zip
+        run: |
+          cd postex-loader
+          zip -r ../crystalkit-postex-loader.zip .
+
+      - name: Upload ZIPs to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: |
+            crystalkit-loader.zip
+            crystalkit-postex-loader.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
