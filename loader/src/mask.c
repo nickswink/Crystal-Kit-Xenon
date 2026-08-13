@@ -67,6 +67,9 @@ void xor_heap ( HEAP_MEMORY * heap )
     {
         HEAP_RECORD * record = &heap->Records [ i ];
 
+        if ( record->Address == NULL || record->Size == 0 )
+            continue;
+
         /* these are already RW */
         apply_mask ( record->Address, record->Size );
     }

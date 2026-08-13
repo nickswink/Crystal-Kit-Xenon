@@ -1,4 +1,4 @@
-#define MAX_HEAP_RECORDS 32
+#define MAX_HEAP_RECORDS 128
 #define MAX_SECTIONS     16
 
 typedef struct {
